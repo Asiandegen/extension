@@ -5,7 +5,7 @@
   "description": "A simple flat betting dice bot extension for Stake/Primedice.",
   "permissions": [
     "storage",     // To save settings (base bet, chance, etc.)
-    "scripting",   // To inject content scripts (alternative method) - might not be needed if using content_scripts below
+    "scripting",   // To inject content scripts (alternative method) - might not be needed if using content_scripts only
     "alarms"       // Optional: Could be used for timing if needed instead of setInterval in service worker
     // "webRequest" // Potentially needed later for advanced network interception, but avoid if possible
   ],
@@ -16,7 +16,7 @@
     "*://*.primedice.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js" // Requires background.js file
   },
   "content_scripts": [
     {
@@ -26,8 +26,8 @@
         "*://*.stake.bet/*",
         "*://*.primedice.com/*"
       ],
-      "js": ["content_script.js"],
-      "css": ["content_script.css"], // We'll inject CSS via JS for now to keep it simple
+      "js": ["content_script.js"], // Requires content_script.js file
+      // "css": ["content_script.css"], // REMOVED this line - CSS is injected via JS
       "run_at": "document_idle" // Run after the page is mostly loaded
     }
   ],
