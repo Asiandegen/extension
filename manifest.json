@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Dice Bot Extension (Flat Betting)",
+  "version": "0.1.0",
+  "description": "A simple flat betting dice bot extension for Stake/Primedice.",
+  "permissions": [
+    "storage",     // To save settings (base bet, chance, etc.)
+    "scripting",   // To inject content scripts (alternative method) - might not be needed if using content_scripts below
+    "alarms"       // Optional: Could be used for timing if needed instead of setInterval in service worker
+    // "webRequest" // Potentially needed later for advanced network interception, but avoid if possible
+  ],
+  "host_permissions": [
+    "*://*.stake.com/*",
+    "*://*.stake.games/*",
+    "*://*.stake.bet/*",
+    "*://*.primedice.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.stake.com/*",
+        "*://*.stake.games/*",
+        "*://*.stake.bet/*",
+        "*://*.primedice.com/*"
+      ],
+      "js": ["content_script.js"],
+      "css": ["content_script.css"], // We'll inject CSS via JS for now to keep it simple
+      "run_at": "document_idle" // Run after the page is mostly loaded
+    }
+  ],
+  "icons": {
+    // Add paths to your icons here if you have them
+    // "16": "images/icon16.png",
+    // "48": "images/icon48.png",
+    // "128": "images/icon128.png"
+  }
+  // We don't need a browser action (popup) for this initial version
+  // "action": {
+  //   "default_popup": "popup.html"
+  // }
+}
